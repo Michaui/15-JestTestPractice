@@ -14,5 +14,5 @@ export function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1); //(1.) Nimmt das erste Char und wandelt es um -> (2.) fügt es dem zweiten String hinzu, wo das erste Char entfernt wurde. 
 }
 
-console.log(toUpperCase('hallo')); 
+// console.log(toUpperCase('hallo')); 
 console.log(capitalize('hallo')); 
