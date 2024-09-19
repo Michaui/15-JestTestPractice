@@ -2,6 +2,10 @@
 import { capitalize } from './function.js';
 import { reverseString } from './function.js';
 import { calculator } from './function.js';
+import { caesarCipher } from './function.js';
+import { analyzeArray } from './function.js';
+
+//TESTS MIT JEST (Expect & Tobe)
 
 // capitalize
 test('capitalizes the first character of a string', () => {
@@ -44,4 +48,79 @@ test('divides two numbers', () => {
 
 test('handles division by zero', () => {
   expect(calculator.divide(6, 0)).toBe('Error: Division by zero');
+});
+
+
+//caesarCipher
+test('should shift letters by 5', () => {
+  expect(caesarCipher("Hello, World!", 5)).toBe("Mjqqt, Btwqi!");
+});
+
+test('should shift letters by 1', () => {
+  expect(caesarCipher("abc", 1)).toBe("bcd");
+});
+
+test('should wrap around the alphabet', () => {
+  expect(caesarCipher("xyz", 3)).toBe("abc");
+});
+
+test('should handle negative shifts', () => {
+  expect(caesarCipher("Hello, World!", -13)).toBe("Uryyb, Jbeyq!");
+});
+
+
+//analyzeArray
+/*
+toBe: Verwendet den strengen Vergleich und prüft, ob zwei Werte identisch sind (d.h., ob sie dieselbe Referenz oder denselben primitiven Wert haben).
+toEqual: Führt einen tiefen Vergleich durch und prüft, ob die Werte in den Objekten oder Arrays übereinstimmen, unabhängig von deren Referenzen.
+*/
+
+describe('analyzeArray', () => {
+  
+  test('correctly analyzes a non-empty array', () => {
+    const result = analyzeArray([1, 8, 3, 4, 2, 6]); //Funktionsaufruf
+
+    expect(result).toEqual({ //Objekte vergleichen
+      average: 4,
+      min: 1,
+      max: 8,
+      length: 6
+    });
+  });
+
+  test('returns null for an empty array', () => {
+    const result = analyzeArray([]);
+    expect(result).toBeNull();
+  });
+
+  test('correctly analyzes an array with a single element', () => {
+    const result = analyzeArray([5]);
+    expect(result).toEqual({
+      average: 5,
+      min: 5,
+      max: 5,
+      length: 1
+    });
+  });
+
+  test('correctly analyzes an array with negative numbers', () => {
+    const result = analyzeArray([-5, -3, -9, -1]);
+    expect(result).toEqual({
+      average: -4.5,
+      min: -9,
+      max: -1,
+      length: 4
+    });
+  });
+
+  test('correctly analyzes an array with mixed positive and negative numbers', () => {
+    const result = analyzeArray([3, -3, 7, -7]);
+    expect(result).toEqual({
+      average: 0,
+      min: -7,
+      max: 7,
+      length: 4
+    });
+  });
+
 });

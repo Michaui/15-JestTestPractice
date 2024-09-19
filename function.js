@@ -18,6 +18,8 @@ Bsp.: Ein calculator-Objekt, das verschiedene mathematische Operationen kapselt.
 
 Durch das Kapseln von Funktionen in einem Objekt vermeidest du globale Variablen und vermeidest Namenskonflikte. 
 Dies hilft, den Code modular und wartbar zu halten.
+
+Abrufen einzelner Methoden, anders als bei analyzeArray wo Informationen gleichzeitig abgerufen werden. 
 */
 
 export const calculator = {
@@ -177,3 +179,55 @@ class UserWithAdvancedCalculator extends User {
 const advancedUser = new UserWithAdvancedCalculator('AdvancedUser');
 console.log(advancedUser.calculator.square(4)); // 16
 */
+
+export function caesarCipher(string, shift){
+  
+  /*
+  Die shiftChar-Funktion berechnet den neuen Buchstaben basierend auf 
+  dem ursprünglichen Buchstaben und der Verschiebung.
+  */
+  const shiftChar = (char, shift) => {
+    const charCode = char.charCodeAt(0);
+    if (char >= 'a' && char <= 'z') {
+      //Wird zuerst auf 0 gesetzt, also -97 (a) damit berechnet werden kann, ob sich der Char. im Intervall der 26 Buchstaben befindet. 
+      //"z" wäre demnach auf 26 und wenn shift <1 fängt das alphabet einfach von neu an, weil alles über 26 immer 0 wäre -> 27%26
+      //Das zusätzliche + 26 in wird verwendet, um sicherzustellen, dass auch negative Werte korrekt behandelt werden (Beispiel: bei einem negativen shift, um zu verhindern, dass das Ergebnis negativ wird).
+      return String.fromCharCode(((charCode - 97 + shift) % 26 + 26) % 26 + 97);
+    }
+    if (char >= 'A' && char <= 'Z') {
+      return String.fromCharCode(((charCode - 65 + shift) % 26 + 26) % 26 + 65);
+    }
+    return char;
+  };
+
+  //Zerteile, mappe jedes char mit Funktion und join alle als string. Return diesen zurück. 
+  return string
+    .split('')
+    .map((char) => shiftChar(char, shift)) //Führe Funktion pro char aus. 
+    .join('');
+};
+
+
+//analyzeArray: Return all methods
+export function analyzeArray(arr) {
+  if (arr.length === 0) {
+    return null;
+  }
+
+  const average = arr.reduce((accumulator, currentValue) => accumulator + currentValue, 0) / arr.length;
+  /* 
+  min, max könne  nicht mit Arrays umgehen, demnach eine Liste von Zahlen als separate Argumente übergeben werden.
+  const arr = [1, 2, 3, 4, 5];
+  console.log(Math.min(arr)); wäre dann Nan. 
+  */
+  const min = Math.min(...arr); //Math.min(1, 2, 3, 4, 5).
+  const max = Math.max(...arr);
+  const length = arr.length;
+
+  return {
+    average,
+    min,
+    max,
+    length
+  };
+}
